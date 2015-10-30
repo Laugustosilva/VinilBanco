@@ -1,30 +1,26 @@
 package fatec.com.model;
 
-import java.util.ArrayList;
-
-public class Categoria {
+public class Vendidos {
 	private Integer id;
 	private String nome;
 	private String creation;
 	private Float preco;
-	private String img;
 	private Integer quant;
 	private String categ;
 	private Integer quantVend;
-	private ArrayList<String> msg;
+	private String hora;
 	
 		
-	public Categoria(Integer id, String nome, String creation, Float preco, String img, Integer quant, String categ, Integer quantVend) {
+	public Vendidos(Integer id, String nome, String creation, Float preco, Integer quant, String categ, Integer quantVend, String hora) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.creation = creation;
 		this.preco = preco;
-		this.img = img;
 		this.quant = quant;
-		this.setCateg(categ);
-		this.setQuantVend(quantVend);
-		msg = new ArrayList<String>();
+		this.categ = categ;
+		this.quantVend = quantVend;
+		this.setHora(hora);
 	}
 	
 	public Integer getQuant() {
@@ -61,14 +57,6 @@ public class Categoria {
 		this.preco = preco;
 	}
 
-	public String getImg() {
-		return img;
-	}
-
-	public void setImg(String img) {
-		this.img = img;
-	}
-
 	public String getCateg() {
 		return categ;
 	}
@@ -85,11 +73,11 @@ public class Categoria {
 		this.quantVend = quantVend;
 	}
 
-	public ArrayList<String> getMsg() {
-		return msg;
+	public String getHora() {
+		return hora;
 	}
 
-	public void setMsg(ArrayList<String> msg) {
-		this.msg = msg;
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 }
