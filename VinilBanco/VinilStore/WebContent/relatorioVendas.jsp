@@ -1,3 +1,4 @@
+<%@page import="fatec.com.model.Usuario"%>
 <%@page import="fatec.com.model.Categoria"%>
 <%@page import="fatec.com.model.Vendidos"%>
 <%@page import="java.util.ArrayList"%>
@@ -26,13 +27,13 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="#">Vinil Store</a>
+      			<a class="navbar-brand" href="index.jsp">Vinil Store</a>
     		</div>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
-        			<li class="active"><a href="index.html">Novos<span class="sr-only">(current)</span></a></li>
+        			<li><a href="index.jsp">Novos<span class="sr-only">(current)</span></a></li>
         			<li><a href="#">Usados</a></li>
-        			<li><a href="relatorioVendas.jsp">Relatório</a></li>
+        			<li class="active"><a href="relatorioVendas.jsp">Relatório</a></li>
         			<li><a href="inserirVinil.html">Inserir Vinil</a></li>
         			
         		</ul>
@@ -44,7 +45,7 @@
                 </form>
         		<ul class="nav navbar-nav navbar-right">
         			<li><a href="carrinho.jsp" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-	        		<li><a href="#">Login</a></li>
+        			<li><a href="index.jsp" id="log" value="logout">Logout</a></li>
         		</ul>
         	</div>
   		</div>

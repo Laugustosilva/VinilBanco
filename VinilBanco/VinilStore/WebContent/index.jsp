@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="fatec.com.controller.Autenticador"%>
 <%@page import="fatec.com.model.*"%>
 <html lang="en">
   <head>
@@ -30,26 +31,23 @@
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
         			<li class="active"><a href="#">Novos<span class="sr-only">(current)</span></a></li>
-        			<li><a href="#">Usados</a></li>
-        			<li><a href="#">Trocar</a></li>
-        			<%Usuario u = (Usuario) session.getAttribute("user"); %>
-        			<%if(u != null){%>
-        				<%if(u.getEhFuncionario()){%>
+        			<%Usuario user = (Usuario) session.getAttribute("user"); %>
+        			<%if(user != null){%>
+        				<%if(user.getEhFuncionario()){%>
+        					<li><a href="relatorioVendas.jsp">Relatório</a></li>
         					<li ><a href="inserirVinil.html">Inserir Vinil</a></li>
         					<%}else%> <li id="iV" ><a href="inserirVinil.html">Inserir Vinil</a></li>
-        			<%}%>
-        			
-        			
+        			<%}%>        			
         		</ul>
         		<form class="navbar-form navbar-left" role="search">
                     <div class="form-group"><input type="text" class="form-control"></div>
                         <button type="submit" class="btn btn-default">Pesquisar</button>
                 </form>
         		<ul class="nav navbar-nav navbar-right">
-        			<li><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-	        		<%if(u == null){%>
+        			<li><a href="carrinho.jsp" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
+	        		<%if(user == null){%>
 	        			<li><a href="login.jsp" id="log">Login</a></li>
-	        			<li><a href="cadastro.jsp" id="criar">Cadastrar</a></li>  			
+	        			<li><a href="cadastro.jsp" id="criar">Cadastrar</a></li>			
 	        		<%}else{%>
 	        			<%session.removeAttribute("user");%>
 	        			<li><a href="index.jsp" id="log">Logout</a></li>
@@ -65,9 +63,6 @@
         <div class="col-md-2">
         </div>
         <div class="col-md-8">
-            <!--<div align="left">
-                        <h1>Compre, Venda e Troque seus Vinis</h1>
-                    </div>-->
                     <div class="carousel slide" id="carousel-16103">
                         <ol class="carousel-indicators">
                             <li class="active" data-slide-to="0" data-target="#carousel-16103">

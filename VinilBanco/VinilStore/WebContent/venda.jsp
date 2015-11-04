@@ -1,3 +1,8 @@
+<%@page import="fatec.com.model.Vendidos"%>
+<%@page import="fatec.com.controller.Autenticador"%>
+<%@page import="fatec.com.model.Msg"%>
+<%@page import="fatec.com.model.Inventario"%>
+<%@page import="fatec.com.model.Usuario"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="fatec.com.model.Categoria"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -25,14 +30,17 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="index.html">Vinil Store</a>
+      			<a class="navbar-brand" href="index.jsp">Vinil Store</a>
     		</div>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
-        			<li class="active"><a href="index.html">Novos<span class="sr-only">(current)</span></a></li>
-        			<li><a href="#">Usados</a></li>
-        			<li><a href="relatorioVendas.jsp">Relatório</a></li>
-        			<li><a href="inserirVinil.html">Inserir Vinil</a></li>
+        			<li class="active"><a href="index.jsp">Novos<span class="sr-only">(current)</span></a></li>
+        			<%if(Autenticador.user != null){%>
+        				<%if(Autenticador.user.getEhFuncionario()){%>
+        					<li><a href="relatorioVendas.jsp">Relatório</a></li>
+        					<li ><a href="inserirVinil.html">Inserir Vinil</a></li>
+        					<%}else%> <li id="iV" ><a href="inserirVinil.html">Inserir Vinil</a></li>
+        			<%}%>
         			
         		</ul>
         		<form class="navbar-form navbar-left" role="search">
@@ -43,7 +51,12 @@
                 </form>
         		<ul class="nav navbar-nav navbar-right">
         			<li><a href="carrinho.jsp" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-	        		<li><a href="#">Login</a></li>
+	        		<%if(Autenticador.user == null){%>
+	        			<li><a href="login.jsp" id="log">Login</a></li>  			
+	        		<%}else{%>
+	        			<%Autenticador.user = null;%>
+	        			<li><a href="index.jsp" id="log">Logout</a></li>
+	        		<%}%>
         		</ul>
         	</div>
   		</div>
@@ -81,7 +94,7 @@
 		  	  </div>
 	  		<%}%>
            </div>
-           <div id="avaliacao" class="col-md-8">
+           <div id="avaliacao">
            <h4>Quantidade vendida</h4>
 	           <div align="center" class="progress">
 	           <%int c = (cat.getQuantVend()*100)/cat.getQuant(); %>
@@ -89,14 +102,61 @@
 				    <%=c%>%
 				  </div>
 				</div>
+		   <h4>Recomendação</h4>
+		   <%ArrayList<Vendidos> vend = (ArrayList<Vendidos>) session.getAttribute("vend"); %>
+		   <%if(vend != null){ %>
+		   	<div class="row">
+		   		<%for(Vendidos ve: vend){ %>
+		   			<div class="col-md-3" align="center">
+		   				<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-516777" href="#panel-element-566363">
+		   					<button id="botaoComprar" type="submit"><input hidden="hidden" type="text" name="id" value="<%=ve.getId()%>"></input>
+		   						<img src="<%=ve.getImg() %>" class="img-thumbnail" style="width: 200px; height: 200px;" /><input hidden="hidden" type="text" name="categ" value="'+categoria.categ+'"></input>
+		   						<div><h4><%=ve.getNome() %></h4></div>
+		   					</button>
+		   				</a>
+		   				<div><h3>R$<%=ve.getPreco() %></h3></div>
+		   				<img src="img/ajax-loader.gif" hidden="hidden" />
+		   				
+		   			</div>
+		   		<%} %>
+            </div>
+		   <%}else{ %>
+		   <h4>Sem compras anteriores.</h4>
+		   <%} %>
+		   <br />
            <h4>Avaliação dos Clientes</h4>
 	           <div align="center" class="progress">
 				  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
 				    60%
 				  </div>
 				</div>
+				<br/>
+				<h4>Comentários</h4>
+				<br />
+	        	<%if(cat.getId()!=null){%>
+	        		<%for(Categoria vc: Inventario.inventario){ %>
+	        			<%if(vc.getId().equals(cat.getId())){ %>
+	        				<%for(Msg m: cat.getMsg()){ %>
+	        					<div style="padding:20px;">
+		        					<div style="float: left;"><b><%=m.getPessoa() %></b></div>
+		        					<div  style="float: right;width: 500px;"><%=m.getMensagem() %></div>
+	        					</div>
+		        					<hr>
+	        				<%} %>
+	        			<%}%>
+	        		<%} %>
+	        	<%}else{ %>
+	        	<h4>Não há comentários</h4>
+	        	<%} %>
+	        	<br/>
+	        	<div align="center">
+					<form action="mensagem">
+						<input name="id" value="<%=cat.getId()%>" hidden="hidden"><textarea rows=4 cols=10 name="mensagem" class="form-control" placeholder="Deixe seu comentário aqui"></textarea>
+						<br/>
+						<button type="submit" class="btn btn-default">Enviar</button>
+					</form>
+				</div>
 	        </div>
-	        
         </div>
     <div class="col-md-2">
     </div>
