@@ -48,7 +48,8 @@
         		<ul class="nav navbar-nav navbar-right">
         			<li><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
 	        		<%if(u == null){%>
-	        			<li><a href="login.jsp" id="log">Login</a></li>  			
+	        			<li><a href="login.jsp" id="log">Login</a></li>
+	        			<li><a href="cadastro.jsp" id="criar">Cadastrar</a></li>  			
 	        		<%}else{%>
 	        			<%session.removeAttribute("user");%>
 	        			<li><a href="index.jsp" id="log">Logout</a></li>

@@ -28,22 +28,6 @@ public class Autenticador extends HttpServlet {
 		String login = request.getParameter("username");
 		String senha = request.getParameter("password");
 		
-		String criar = request.getParameter("criar");
-		
-		if(criar!=null){
-			String n = request.getParameter("novonome");
-			String l = request.getParameter("novousername");
-			String s = request.getParameter("novapassword");
-			
-			Usuario user = new Usuario();
-			user.setLogin(l);
-			user.setSenha(s);
-			user.setNome(n);
-			user.setEhFuncionario(false);
-			
-			listaDeUsuarios.add(user);
-		}
-		
 		Usuario temp = new Usuario();
 		
 		if(listaDeUsuarios.size()==0){			
@@ -84,5 +68,7 @@ public class Autenticador extends HttpServlet {
 		else {
 			response.sendRedirect("login.jsp");
 		}
+		
+		
 	}
 }
